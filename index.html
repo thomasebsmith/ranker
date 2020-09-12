@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ranker</title>
+    <link rel="stylesheet" type="text/css" href="./style/main.css">
+  </head>
+  <body>
+    <header>
+      <h1>Ranker</h1>
+      <p>Rank anything using 1-on-1 comparisons.</p>
+    </header>
+    <main>
+      <div class="load-save">
+        <section class="load-ranking">
+          <input type="text" class="ranking-input">
+          <input type="button" class="ranking-load-btn" value="Load ranking">
+        </section>
+        <section class="save-ranking">
+          <input type="text" class="ranking-output">
+          <input type="button" class="ranking-save-btn" value="Copy ranking">
+        </section>
+      </div>
+      <div class="rank-new">
+        <section>
+          <h2>Rank New</h2>
+          <label for="new-input">
+            Name: <input type="text" id="new-input">
+          </label>
+          <div class="comparison hidden">
+            <input type="button" class="left"
+                   value="Left should be ranked higher">
+            <input type="button" class="right"
+                   value="Right should be ranked higher">
+            </span>
+          </div>
+          <div>
+            <input type="button" class="rank-btn" disabled="disabled"
+                   value="Add to current ranking">
+          </div>
+        </section>
+      </div>
+      <div class="ranking">
+        <section>
+          <h2>Current Ranking</h2>
+          <ol class="list"></ol>
+        </section>
+      </div>
+      <script type="text/javascript" src="./script/main.js"></script>
+    </main>
+  </body>
+</html>

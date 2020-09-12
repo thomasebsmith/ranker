@@ -1,0 +1,116 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 10px;
+}
+
+section {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+section ~ section {
+  margin-left: 5px;
+}
+
+button, input[type=button] {
+  cursor: pointer;
+}
+
+button[disabled], input[type=button][disabled] {
+  cursor: not-allowed;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+header {
+  text-align: center;
+}
+
+header > p {
+  font-style: italic;
+}
+
+main > div {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.rank-new, .ranking {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+  min-width: 250px;
+  width: 50%;
+}
+
+.rank-new > section, .ranking > section {
+  display: block;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.comparison {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.comparison::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.comparison > :first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.comparison > :last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.comparison > .left, .comparison > .right {
+  background: none;
+  border: none;
+  height: 50px;
+  width: 50%;
+}
+
+.comparison > .left {
+  background: limegreen;
+}
+
+.comparison > .right {
+  background: orangered;
+}
+
+.rank-btn {
+  background: none;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  margin-top: 10px;
+  padding: 4px 10px;
+}
+
+.list {
+  text-align: left;
+  padding: 0 12px;
+}
