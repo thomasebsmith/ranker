@@ -58,7 +58,6 @@ var addToRanking = function() {
   rankingList.insertBefore(listItem, rankingList.childNodes[minRank]);
 
   newInput.value = "";
-  addRankBtn.disabled = true;
   minRank = 0;
   maxRank = ranking.length + 1;
 };
@@ -69,8 +68,14 @@ var updateUI = function() {
     hideRankingChoice();
   }
   else {
-    if (rankingComplete()) {
+    var canAddRank = rankingComplete();
+    if (canAddRank && ranking.length === 0) {
       addRankBtn.disabled = false;
+      hideRankingChoice();
+    }
+    else if (canAddRank) {
+      addToRanking();
+      addRankBtn.disabled = true;
       hideRankingChoice();
     }
     else {
@@ -87,13 +92,13 @@ newInput.addEventListener("input", function() {
 
 addRankBtn.addEventListener("click", function() {
   addToRanking();
+  updateUI();
 });
 
 chooseLeftBtn.addEventListener("click", function() {
   maxRank = getComparisonIndex() + 1;
   updateUI();
 });
-
 
 chooseRightBtn.addEventListener("click", function() {
   minRank = getComparisonIndex() + 1;
