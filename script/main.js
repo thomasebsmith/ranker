@@ -1,4 +1,8 @@
 /* Variables */
+var loadRankingInput = document.querySelector(".ranking-input");
+var loadRankingBtn = document.querySelector(".ranking-load-btn");
+var saveRankingOutput = document.querySelector(".ranking-output");
+var saveRankingBtn = document.querySelector(".ranking-save-btn");
 var newInput = document.querySelector("#new-input");
 var comparisonSection = document.querySelector(".comparison");
 var chooseLeftBtn = document.querySelector(".comparison > input.left");
@@ -16,6 +20,63 @@ var minRank = 0;
 var maxRank = 1;
 
 /* Functions */
+var addRankingListItemElement = function(text, index) {
+  var listItem = document.createElement("li");
+  listItem.textContent = text;
+
+  var insertBefore;
+  if (index >= rankingList.children.length) {
+    insertBefore = null;
+  }
+  else {
+    insertBefore = rankingList.children[index];
+  }
+  rankingList.insertBefore(listItem, insertBefore);
+};
+
+var loadRanking = function() {
+  var rankingString = loadRankingInput.value;
+  var confirmMessage = "Are you sure you want to load a new ranking?" +
+    " This will overwrite the existing one.";
+  if (ranking.length !== 0 && !confirm(confirmMessage)) {
+    return;
+  }
+
+  var json = null;
+  var isError = false;
+  try {
+    json = JSON.parse(rankingString);
+    json = json.map(element => element + "");
+  }
+  catch (err) {
+    isError = true;
+  }
+
+  if (isError || !Array.isArray(json)) {
+    throw new SyntaxError("Invalid ranking string provided");
+  }
+
+  ranking = json;
+
+  minRank = 0;
+  maxRank = ranking.length + 1;
+
+  for (var i = 0; i < ranking.length; ++i) {
+    addRankingListItemElement(ranking[i], i);
+  }
+
+  loadRankingInput.value = "";
+};
+
+var saveRanking = function() {
+  return JSON.stringify(ranking);
+};
+
+var updateRankingSaveBox = function() {
+  saveRankingOutput.value = saveRanking();
+};
+
+
 var getComparisonIndex = function() {
   return minRank + Math.floor((maxRank - minRank) / 2 - 1);
 };
@@ -52,10 +113,9 @@ var addToRanking = function() {
   }
 
   ranking.splice(minRank, 0, newInput.value);
+  addRankingListItemElement(newInput.value, minRank);
 
-  var listItem = document.createElement("li");
-  listItem.textContent = newInput.value;
-  rankingList.insertBefore(listItem, rankingList.childNodes[minRank]);
+  updateRankingSaveBox();
 
   newInput.value = "";
   minRank = 0;
@@ -85,7 +145,17 @@ var updateUI = function() {
 };
 
 /* Event listeners */
-updateUI();
+loadRankingBtn.addEventListener("click", function() {
+  loadRanking();
+  updateRankingSaveBox();
+  updateUI();
+});
+
+saveRankingBtn.addEventListener("click", function() {
+  saveRankingOutput.select();
+  document.execCommand("copy");
+});
+
 newInput.addEventListener("input", function() {
   updateUI();
 });
@@ -104,3 +174,7 @@ chooseRightBtn.addEventListener("click", function() {
   minRank = getComparisonIndex() + 1;
   updateUI();
 });
+
+/* Main program */
+updateRankingSaveBox();
+updateUI();
