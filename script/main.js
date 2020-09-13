@@ -16,12 +16,22 @@ var minRank = 0;
 var maxRank = 1;
 
 /* Functions */
+var getComparisonIndex = function() {
+  return minRank + Math.floor((maxRank - minRank) / 2 - 1);
+};
+
 var rankingComplete = function() {
   return ranking.length === 0 || minRank === maxRank - 1;
 };
 
 var showRankingChoice = function() {
   comparisonSection.classList.remove("hidden");
+
+  var leftName = newInput.value;
+  var rightName = ranking[getComparisonIndex()];
+
+  chooseLeftBtn.value = leftName + " should be ranked higher";
+  chooseRightBtn.value = rightName + " should be ranked higher";
 };
 
 var hideRankingChoice = function() {
@@ -45,7 +55,7 @@ var addToRanking = function() {
 
   var listItem = document.createElement("li");
   listItem.textContent = newInput.value;
-  rankingList.insertBefore(listItem, newInput.childNodes[minRank]);
+  rankingList.insertBefore(listItem, rankingList.childNodes[minRank]);
 
   newInput.value = "";
   addRankBtn.disabled = true;
@@ -53,24 +63,39 @@ var addToRanking = function() {
   maxRank = ranking.length + 1;
 };
 
-/* Event listeners */
-var onNewInput = function() {
-  if (this.value === "") {
+var updateUI = function() {
+  if (newInput.value === "") {
     addRankBtn.disabled = true;
     hideRankingChoice();
   }
   else {
     if (rankingComplete()) {
       addRankBtn.disabled = false;
+      hideRankingChoice();
     }
     else {
       showRankingChoice();
     }
   }
 };
-onNewInput.call(newInput);
-newInput.addEventListener("input", onNewInput);
+
+/* Event listeners */
+updateUI();
+newInput.addEventListener("input", function() {
+  updateUI();
+});
 
 addRankBtn.addEventListener("click", function() {
   addToRanking();
+});
+
+chooseLeftBtn.addEventListener("click", function() {
+  maxRank = getComparisonIndex() + 1;
+  updateUI();
+});
+
+
+chooseRightBtn.addEventListener("click", function() {
+  minRank = getComparisonIndex() + 1;
+  updateUI();
 });
