@@ -114,3 +114,23 @@ main > div {
   text-align: left;
   padding: 0 12px;
 }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    background: #181818;
+    color: #D8D8D8;
+  }
+
+  button, input[type=button] {
+    background: #333;
+    color: white;
+    border: 0.5px solid #444;
+    border-radius: 3px;
+  }
+
+  button:active, input[type=button]:active {
+    border-color: #1177DD;
+    background: #0066CC;
+  }
+}
